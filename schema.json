@@ -1,0 +1,857 @@
+{
+  "name": "ecg_arrhythmia.db",
+  "tables": [
+    {
+      "name": "patient",
+      "type": "table",
+      "columns": [
+        {
+          "name": "name",
+          "type": "VARCHAR(100)",
+          "nullable": true
+        },
+        {
+          "name": "age",
+          "type": "INTEGER",
+          "nullable": true
+        },
+        {
+          "name": "gender",
+          "type": "VARCHAR(10)",
+          "nullable": true
+        },
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "DATETIME",
+          "nullable": true
+        },
+        {
+          "name": "updated_at",
+          "type": "DATETIME",
+          "nullable": true
+        },
+        {
+          "name": "birth_date",
+          "type": "DATE",
+          "nullable": true
+        },
+        {
+          "name": "contact",
+          "type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "notes",
+          "type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "has_arrhythmia",
+          "type": "BOOLEAN",
+          "nullable": true,
+          "default": "0"
+        },
+        {
+          "name": "user_id",
+          "type": "INTEGER",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        {
+          "name": "id",
+          "type": "PRIMARY KEY",
+          "def": "PRIMARY KEY (id)",
+          "table": "patient",
+          "columns": [
+            "id"
+          ]
+        }
+      ],
+      "def": "CREATE TABLE patient (\n\tname VARCHAR(100), \n\tage INTEGER, \n\tgender VARCHAR(10), \n\tid INTEGER NOT NULL, \n\tcreated_at DATETIME, \n\tupdated_at DATETIME, birth_date DATE, contact TEXT, notes TEXT, has_arrhythmia BOOLEAN DEFAULT 0, user_id INTEGER, \n\tPRIMARY KEY (id)\n)"
+    },
+    {
+      "name": "users",
+      "type": "table",
+      "columns": [
+        {
+          "name": "username",
+          "type": "VARCHAR(100)",
+          "nullable": false
+        },
+        {
+          "name": "email",
+          "type": "VARCHAR(100)",
+          "nullable": false
+        },
+        {
+          "name": "password_hash",
+          "type": "VARCHAR(255)",
+          "nullable": false
+        },
+        {
+          "name": "full_name",
+          "type": "VARCHAR(255)",
+          "nullable": true
+        },
+        {
+          "name": "role",
+          "type": "VARCHAR(20)",
+          "nullable": false
+        },
+        {
+          "name": "is_active",
+          "type": "BOOLEAN",
+          "nullable": false
+        },
+        {
+          "name": "last_login",
+          "type": "DATETIME",
+          "nullable": true
+        },
+        {
+          "name": "type",
+          "type": "VARCHAR(20)",
+          "nullable": true
+        },
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "DATETIME",
+          "nullable": true
+        },
+        {
+          "name": "updated_at",
+          "type": "DATETIME",
+          "nullable": true
+        },
+        {
+          "name": "avatar_url",
+          "type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "birth_date",
+          "type": "DATE",
+          "nullable": true
+        },
+        {
+          "name": "gender",
+          "type": "VARCHAR(20)",
+          "nullable": true
+        }
+      ],
+      "indexes": [
+        {
+          "name": "sqlite_autoindex_users_2",
+          "def": "UNIQUE (email)",
+          "table": "users",
+          "columns": [
+            "email"
+          ]
+        },
+        {
+          "name": "sqlite_autoindex_users_1",
+          "def": "UNIQUE (username)",
+          "table": "users",
+          "columns": [
+            "username"
+          ]
+        }
+      ],
+      "constraints": [
+        {
+          "name": "id",
+          "type": "PRIMARY KEY",
+          "def": "PRIMARY KEY (id)",
+          "table": "users",
+          "columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "sqlite_autoindex_users_2",
+          "type": "UNIQUE",
+          "def": "UNIQUE (email)",
+          "table": "users",
+          "columns": [
+            "email"
+          ]
+        },
+        {
+          "name": "sqlite_autoindex_users_1",
+          "type": "UNIQUE",
+          "def": "UNIQUE (username)",
+          "table": "users",
+          "columns": [
+            "username"
+          ]
+        }
+      ],
+      "def": "CREATE TABLE users (\n\tusername VARCHAR(100) NOT NULL, \n\temail VARCHAR(100) NOT NULL, \n\tpassword_hash VARCHAR(255) NOT NULL, \n\tfull_name VARCHAR(255), \n\trole VARCHAR(20) NOT NULL, \n\tis_active BOOLEAN NOT NULL, \n\tlast_login DATETIME, \n\ttype VARCHAR(20), \n\tid INTEGER NOT NULL, \n\tcreated_at DATETIME, \n\tupdated_at DATETIME, avatar_url TEXT, birth_date DATE, gender VARCHAR(20), \n\tPRIMARY KEY (id), \n\tUNIQUE (username), \n\tUNIQUE (email)\n)"
+    },
+    {
+      "name": "ecg_record",
+      "type": "table",
+      "columns": [
+        {
+          "name": "patient_id",
+          "type": "INTEGER",
+          "nullable": true
+        },
+        {
+          "name": "record_name",
+          "type": "VARCHAR(50)",
+          "nullable": false
+        },
+        {
+          "name": "record_path",
+          "type": "VARCHAR(255)",
+          "nullable": true
+        },
+        {
+          "name": "record_data",
+          "type": "BLOB",
+          "nullable": true
+        },
+        {
+          "name": "ecg_metadata",
+          "type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "DATETIME",
+          "nullable": true
+        },
+        {
+          "name": "updated_at",
+          "type": "DATETIME",
+          "nullable": true
+        },
+        {
+          "name": "user_id",
+          "type": "INTEGER",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        {
+          "name": "id",
+          "type": "PRIMARY KEY",
+          "def": "PRIMARY KEY (id)",
+          "table": "ecg_record",
+          "columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "- (Foreign key ID: 0)",
+          "type": "FOREIGN KEY",
+          "def": "FOREIGN KEY (patient_id) REFERENCES patient (id) ON UPDATE NO ACTION ON DELETE NO ACTION MATCH NONE",
+          "table": "ecg_record",
+          "referenced_table": "patient",
+          "columns": [
+            "patient_id"
+          ],
+          "referenced_columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "- (Foreign key ID: 1)",
+          "type": "FOREIGN KEY",
+          "def": "FOREIGN KEY (user_id) REFERENCES users (id) ON UPDATE NO ACTION ON DELETE NO ACTION MATCH NONE",
+          "table": "ecg_record",
+          "referenced_table": "users",
+          "columns": [
+            "user_id"
+          ],
+          "referenced_columns": [
+            "id"
+          ]
+        }
+      ],
+      "def": "CREATE TABLE ecg_record (\n\tpatient_id INTEGER, \n\trecord_name VARCHAR(50) NOT NULL, \n\trecord_path VARCHAR(255), \n\trecord_data BLOB, \n\tecg_metadata TEXT, \n\tid INTEGER NOT NULL, \n\tcreated_at DATETIME, \n\tupdated_at DATETIME, user_id INTEGER REFERENCES users(id), \n\tPRIMARY KEY (id), \n\tFOREIGN KEY(patient_id) REFERENCES patient (id)\n)"
+    },
+    {
+      "name": "doctors",
+      "type": "table",
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "specialty",
+          "type": "VARCHAR(100)",
+          "nullable": true
+        },
+        {
+          "name": "license_number",
+          "type": "VARCHAR(50)",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        {
+          "name": "id",
+          "type": "PRIMARY KEY",
+          "def": "PRIMARY KEY (id)",
+          "table": "doctors",
+          "columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "- (Foreign key ID: 0)",
+          "type": "FOREIGN KEY",
+          "def": "FOREIGN KEY (id) REFERENCES users (id) ON UPDATE NO ACTION ON DELETE NO ACTION MATCH NONE",
+          "table": "doctors",
+          "referenced_table": "users",
+          "columns": [
+            "id"
+          ],
+          "referenced_columns": [
+            "id"
+          ]
+        }
+      ],
+      "def": "CREATE TABLE doctors (\n\tid INTEGER NOT NULL, \n\tspecialty VARCHAR(100), \n\tlicense_number VARCHAR(50), \n\tPRIMARY KEY (id), \n\tFOREIGN KEY(id) REFERENCES users (id)\n)"
+    },
+    {
+      "name": "admins",
+      "type": "table",
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "access_level",
+          "type": "INTEGER",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        {
+          "name": "id",
+          "type": "PRIMARY KEY",
+          "def": "PRIMARY KEY (id)",
+          "table": "admins",
+          "columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "- (Foreign key ID: 0)",
+          "type": "FOREIGN KEY",
+          "def": "FOREIGN KEY (id) REFERENCES users (id) ON UPDATE NO ACTION ON DELETE NO ACTION MATCH NONE",
+          "table": "admins",
+          "referenced_table": "users",
+          "columns": [
+            "id"
+          ],
+          "referenced_columns": [
+            "id"
+          ]
+        }
+      ],
+      "def": "CREATE TABLE admins (\n\tid INTEGER NOT NULL, \n\taccess_level INTEGER, \n\tPRIMARY KEY (id), \n\tFOREIGN KEY(id) REFERENCES users (id)\n)"
+    },
+    {
+      "name": "prediction_result",
+      "type": "table",
+      "columns": [
+        {
+          "name": "ecg_record_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "class_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "class_name",
+          "type": "VARCHAR(50)",
+          "nullable": false
+        },
+        {
+          "name": "class_description",
+          "type": "VARCHAR(255)",
+          "nullable": true
+        },
+        {
+          "name": "is_arrhythmia",
+          "type": "BOOLEAN",
+          "nullable": true
+        },
+        {
+          "name": "probabilities",
+          "type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "inference_time",
+          "type": "FLOAT",
+          "nullable": true
+        },
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "DATETIME",
+          "nullable": true
+        },
+        {
+          "name": "updated_at",
+          "type": "DATETIME",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        {
+          "name": "id",
+          "type": "PRIMARY KEY",
+          "def": "PRIMARY KEY (id)",
+          "table": "prediction_result",
+          "columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "- (Foreign key ID: 0)",
+          "type": "FOREIGN KEY",
+          "def": "FOREIGN KEY (ecg_record_id) REFERENCES ecg_record (id) ON UPDATE NO ACTION ON DELETE NO ACTION MATCH NONE",
+          "table": "prediction_result",
+          "referenced_table": "ecg_record",
+          "columns": [
+            "ecg_record_id"
+          ],
+          "referenced_columns": [
+            "id"
+          ]
+        }
+      ],
+      "def": "CREATE TABLE prediction_result (\n\tecg_record_id INTEGER NOT NULL, \n\tclass_id INTEGER NOT NULL, \n\tclass_name VARCHAR(50) NOT NULL, \n\tclass_description VARCHAR(255), \n\tis_arrhythmia BOOLEAN, \n\tprobabilities TEXT, \n\tinference_time FLOAT, \n\tid INTEGER NOT NULL, \n\tcreated_at DATETIME, \n\tupdated_at DATETIME, \n\tPRIMARY KEY (id), \n\tFOREIGN KEY(ecg_record_id) REFERENCES ecg_record (id)\n)"
+    },
+    {
+      "name": "medical_history",
+      "type": "table",
+      "columns": [
+        {
+          "name": "patient_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "record_date",
+          "type": "DATETIME",
+          "nullable": true
+        },
+        {
+          "name": "diagnosis",
+          "type": "VARCHAR(255)",
+          "nullable": true
+        },
+        {
+          "name": "description",
+          "type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "treatment",
+          "type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "doctor_id",
+          "type": "INTEGER",
+          "nullable": true
+        },
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "DATETIME",
+          "nullable": true
+        },
+        {
+          "name": "updated_at",
+          "type": "DATETIME",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        {
+          "name": "id",
+          "type": "PRIMARY KEY",
+          "def": "PRIMARY KEY (id)",
+          "table": "medical_history",
+          "columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "- (Foreign key ID: 0)",
+          "type": "FOREIGN KEY",
+          "def": "FOREIGN KEY (doctor_id) REFERENCES doctors (id) ON UPDATE NO ACTION ON DELETE NO ACTION MATCH NONE",
+          "table": "medical_history",
+          "referenced_table": "doctors",
+          "columns": [
+            "doctor_id"
+          ],
+          "referenced_columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "- (Foreign key ID: 1)",
+          "type": "FOREIGN KEY",
+          "def": "FOREIGN KEY (patient_id) REFERENCES patient (id) ON UPDATE NO ACTION ON DELETE NO ACTION MATCH NONE",
+          "table": "medical_history",
+          "referenced_table": "patient",
+          "columns": [
+            "patient_id"
+          ],
+          "referenced_columns": [
+            "id"
+          ]
+        }
+      ],
+      "def": "CREATE TABLE medical_history (\n\tpatient_id INTEGER NOT NULL, \n\trecord_date DATETIME, \n\tdiagnosis VARCHAR(255), \n\tdescription TEXT, \n\ttreatment TEXT, \n\tdoctor_id INTEGER, \n\tid INTEGER NOT NULL, \n\tcreated_at DATETIME, \n\tupdated_at DATETIME, \n\tPRIMARY KEY (id), \n\tFOREIGN KEY(patient_id) REFERENCES patient (id), \n\tFOREIGN KEY(doctor_id) REFERENCES doctors (id)\n)"
+    },
+    {
+      "name": "notification",
+      "type": "table",
+      "columns": [
+        {
+          "name": "recipient_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "title",
+          "type": "VARCHAR(100)",
+          "nullable": false
+        },
+        {
+          "name": "content",
+          "type": "TEXT",
+          "nullable": false
+        },
+        {
+          "name": "is_read",
+          "type": "BOOLEAN",
+          "nullable": true
+        },
+        {
+          "name": "type",
+          "type": "VARCHAR(20)",
+          "nullable": true
+        },
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "DATETIME",
+          "nullable": true
+        },
+        {
+          "name": "updated_at",
+          "type": "DATETIME",
+          "nullable": true
+        },
+        {
+          "name": "prediction_id",
+          "type": "INTEGER",
+          "nullable": true
+        },
+        {
+          "name": "severity",
+          "type": "VARCHAR(20)",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        {
+          "name": "id",
+          "type": "PRIMARY KEY",
+          "def": "PRIMARY KEY (id)",
+          "table": "notification",
+          "columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "- (Foreign key ID: 0)",
+          "type": "FOREIGN KEY",
+          "def": "FOREIGN KEY (prediction_id) REFERENCES prediction_result (id) ON UPDATE NO ACTION ON DELETE NO ACTION MATCH NONE",
+          "table": "notification",
+          "referenced_table": "prediction_result",
+          "columns": [
+            "prediction_id"
+          ],
+          "referenced_columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "- (Foreign key ID: 1)",
+          "type": "FOREIGN KEY",
+          "def": "FOREIGN KEY (recipient_id) REFERENCES users (id) ON UPDATE NO ACTION ON DELETE NO ACTION MATCH NONE",
+          "table": "notification",
+          "referenced_table": "users",
+          "columns": [
+            "recipient_id"
+          ],
+          "referenced_columns": [
+            "id"
+          ]
+        }
+      ],
+      "def": "CREATE TABLE notification (\n\trecipient_id INTEGER NOT NULL, \n\ttitle VARCHAR(100) NOT NULL, \n\tcontent TEXT NOT NULL, \n\tis_read BOOLEAN, \n\ttype VARCHAR(20), \n\tid INTEGER NOT NULL, \n\tcreated_at DATETIME, \n\tupdated_at DATETIME, \n\tprediction_id INTEGER, \n\tseverity VARCHAR(20), \n\tPRIMARY KEY (id), \n\tFOREIGN KEY(recipient_id) REFERENCES users (id), \n\tFOREIGN KEY(prediction_id) REFERENCES prediction_result (id)\n)"
+    },
+    {
+      "name": "doctor_patient",
+      "type": "table",
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "nullable": true
+        },
+        {
+          "name": "doctor_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "patient_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "assigned_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP"
+        }
+      ],
+      "constraints": [
+        {
+          "name": "id",
+          "type": "PRIMARY KEY",
+          "def": "PRIMARY KEY (id)",
+          "table": "doctor_patient",
+          "columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "- (Foreign key ID: 0)",
+          "type": "FOREIGN KEY",
+          "def": "FOREIGN KEY (patient_id) REFERENCES patient (id) ON UPDATE NO ACTION ON DELETE NO ACTION MATCH NONE",
+          "table": "doctor_patient",
+          "referenced_table": "patient",
+          "columns": [
+            "patient_id"
+          ],
+          "referenced_columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "- (Foreign key ID: 1)",
+          "type": "FOREIGN KEY",
+          "def": "FOREIGN KEY (doctor_id) REFERENCES users (id) ON UPDATE NO ACTION ON DELETE NO ACTION MATCH NONE",
+          "table": "doctor_patient",
+          "referenced_table": "users",
+          "columns": [
+            "doctor_id"
+          ],
+          "referenced_columns": [
+            "id"
+          ]
+        }
+      ],
+      "def": "CREATE TABLE doctor_patient (\n                id INTEGER PRIMARY KEY AUTOINCREMENT,\n                doctor_id INTEGER NOT NULL,\n                patient_id INTEGER NOT NULL,\n                assigned_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n                FOREIGN KEY (doctor_id) REFERENCES users(id),\n                FOREIGN KEY (patient_id) REFERENCES patient(id))"
+    }
+  ],
+  "relations": [
+    {
+      "table": "ecg_record",
+      "columns": [
+        "patient_id"
+      ],
+      "cardinality": "zero_or_more",
+      "parent_table": "patient",
+      "parent_columns": [
+        "id"
+      ],
+      "parent_cardinality": "zero_or_one",
+      "def": "FOREIGN KEY (patient_id) REFERENCES patient (id) ON UPDATE NO ACTION ON DELETE NO ACTION MATCH NONE"
+    },
+    {
+      "table": "ecg_record",
+      "columns": [
+        "user_id"
+      ],
+      "cardinality": "zero_or_more",
+      "parent_table": "users",
+      "parent_columns": [
+        "id"
+      ],
+      "parent_cardinality": "zero_or_one",
+      "def": "FOREIGN KEY (user_id) REFERENCES users (id) ON UPDATE NO ACTION ON DELETE NO ACTION MATCH NONE"
+    },
+    {
+      "table": "doctors",
+      "columns": [
+        "id"
+      ],
+      "cardinality": "zero_or_one",
+      "parent_table": "users",
+      "parent_columns": [
+        "id"
+      ],
+      "parent_cardinality": "exactly_one",
+      "def": "FOREIGN KEY (id) REFERENCES users (id) ON UPDATE NO ACTION ON DELETE NO ACTION MATCH NONE"
+    },
+    {
+      "table": "admins",
+      "columns": [
+        "id"
+      ],
+      "cardinality": "zero_or_one",
+      "parent_table": "users",
+      "parent_columns": [
+        "id"
+      ],
+      "parent_cardinality": "exactly_one",
+      "def": "FOREIGN KEY (id) REFERENCES users (id) ON UPDATE NO ACTION ON DELETE NO ACTION MATCH NONE"
+    },
+    {
+      "table": "prediction_result",
+      "columns": [
+        "ecg_record_id"
+      ],
+      "cardinality": "zero_or_more",
+      "parent_table": "ecg_record",
+      "parent_columns": [
+        "id"
+      ],
+      "parent_cardinality": "exactly_one",
+      "def": "FOREIGN KEY (ecg_record_id) REFERENCES ecg_record (id) ON UPDATE NO ACTION ON DELETE NO ACTION MATCH NONE"
+    },
+    {
+      "table": "medical_history",
+      "columns": [
+        "doctor_id"
+      ],
+      "cardinality": "zero_or_more",
+      "parent_table": "doctors",
+      "parent_columns": [
+        "id"
+      ],
+      "parent_cardinality": "zero_or_one",
+      "def": "FOREIGN KEY (doctor_id) REFERENCES doctors (id) ON UPDATE NO ACTION ON DELETE NO ACTION MATCH NONE"
+    },
+    {
+      "table": "medical_history",
+      "columns": [
+        "patient_id"
+      ],
+      "cardinality": "zero_or_more",
+      "parent_table": "patient",
+      "parent_columns": [
+        "id"
+      ],
+      "parent_cardinality": "exactly_one",
+      "def": "FOREIGN KEY (patient_id) REFERENCES patient (id) ON UPDATE NO ACTION ON DELETE NO ACTION MATCH NONE"
+    },
+    {
+      "table": "notification",
+      "columns": [
+        "prediction_id"
+      ],
+      "cardinality": "zero_or_more",
+      "parent_table": "prediction_result",
+      "parent_columns": [
+        "id"
+      ],
+      "parent_cardinality": "zero_or_one",
+      "def": "FOREIGN KEY (prediction_id) REFERENCES prediction_result (id) ON UPDATE NO ACTION ON DELETE NO ACTION MATCH NONE"
+    },
+    {
+      "table": "notification",
+      "columns": [
+        "recipient_id"
+      ],
+      "cardinality": "zero_or_more",
+      "parent_table": "users",
+      "parent_columns": [
+        "id"
+      ],
+      "parent_cardinality": "exactly_one",
+      "def": "FOREIGN KEY (recipient_id) REFERENCES users (id) ON UPDATE NO ACTION ON DELETE NO ACTION MATCH NONE"
+    },
+    {
+      "table": "doctor_patient",
+      "columns": [
+        "patient_id"
+      ],
+      "cardinality": "zero_or_more",
+      "parent_table": "patient",
+      "parent_columns": [
+        "id"
+      ],
+      "parent_cardinality": "exactly_one",
+      "def": "FOREIGN KEY (patient_id) REFERENCES patient (id) ON UPDATE NO ACTION ON DELETE NO ACTION MATCH NONE"
+    },
+    {
+      "table": "doctor_patient",
+      "columns": [
+        "doctor_id"
+      ],
+      "cardinality": "zero_or_more",
+      "parent_table": "users",
+      "parent_columns": [
+        "id"
+      ],
+      "parent_cardinality": "exactly_one",
+      "def": "FOREIGN KEY (doctor_id) REFERENCES users (id) ON UPDATE NO ACTION ON DELETE NO ACTION MATCH NONE"
+    }
+  ],
+  "driver": {
+    "name": "sqlite",
+    "database_version": "3.49.1"
+  }
+}
